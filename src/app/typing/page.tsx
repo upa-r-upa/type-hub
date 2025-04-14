@@ -13,7 +13,7 @@ const sampleTexts = [
   "기계식 키보드의 매력은 타건의 즐거움과 소리에 있다. 오늘도 즐거운 타이핑을.",
 ];
 
-export default function Home() {
+export default function TypingPage() {
   const [currentText, setCurrentText] = useState("");
   const [typedText, setTypedText] = useState("");
   const [isCompleted, setIsCompleted] = useState(false);
@@ -89,14 +89,7 @@ export default function Home() {
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <h1 className="mb-8 text-center text-3xl font-bold">TypeHub</h1>
-      
-      <div className="mx-auto mb-8 max-w-2xl text-center">
-        <p className="text-lg text-muted-foreground">
-          기계식 키보드 애호가를 위한 최고의 타이핑 경험을 제공합니다.
-          아름다운 글귀를 타이핑하며 당신의 키보드를 즐겨보세요.
-        </p>
-      </div>
+      <h1 className="mb-8 text-center text-3xl font-bold">타이핑 연습</h1>
       
       <Card className="mx-auto mb-6 max-w-3xl">
         <CardContent className="p-6">
@@ -133,4 +126,4 @@ export default function Home() {
       </div>
     </div>
   );
-}
+} 
