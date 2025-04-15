@@ -1,136 +1,80 @@
-"use client";
-
-import { useState, useEffect, useRef } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import React from "react";
+import { Settings, ChevronRight, SkipForward, RefreshCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-// 임시 샘플 텍스트 데이터
-const sampleTexts = [
-  "좋은 책은 인류의 귀중한 보물이다. - 영원히 시들지 않는 생명의 꽃이다.",
-  "당신이 할 수 있다고 믿으면 절반은 이미 된 것이나 다름 없다.",
-  "삶이 있는 한 희망은 있다. 해가 뜨지 않을 것 같은 긴 밤도 언젠가는 끝이 나고 새벽은 오게 되어 있다.",
-  "모든 시작은 미약하나 끝은 창대하리라. 오늘도 키보드의 타건 소리가 아름답게 울려 퍼지길.",
-  "기계식 키보드의 매력은 타건의 즐거움과 소리에 있다. 오늘도 즐거운 타이핑을.",
-];
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Home() {
-  const [currentText, setCurrentText] = useState("");
-  const [typedText, setTypedText] = useState("");
-  const [isCompleted, setIsCompleted] = useState(false);
-  const [startTime, setStartTime] = useState<number | null>(null);
-  const [endTime, setEndTime] = useState<number | null>(null);
-  
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  // 랜덤 텍스트 선택
-  useEffect(() => {
-    getRandomText();
-  }, []);
-
-  // 텍스트 입력 처리
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setTypedText(value);
-
-    // 처음 타이핑 시작할 때 시간 측정
-    if (value.length === 1 && !startTime) {
-      setStartTime(Date.now());
-    }
-
-    // 타이핑 완료 확인
-    if (value === currentText) {
-      setEndTime(Date.now());
-      setIsCompleted(true);
-    }
-  };
-
-  // 새로운 랜덤 텍스트 가져오기
-  const getRandomText = () => {
-    const randomIndex = Math.floor(Math.random() * sampleTexts.length);
-    setCurrentText(sampleTexts[randomIndex]);
-    setTypedText("");
-    setIsCompleted(false);
-    setStartTime(null);
-    setEndTime(null);
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 100);
-  };
-
-  // 타이핑 속도 계산
-  const calculateSpeed = () => {
-    if (startTime && endTime) {
-      const timeInSeconds = (endTime - startTime) / 1000;
-      const wordsCount = currentText.split(" ").length;
-      const wpm = Math.round((wordsCount / timeInSeconds) * 60);
-      return wpm;
-    }
-    return 0;
-  };
-
-  // 텍스트 하이라이팅
-  const renderText = () => {
-    const textArray = currentText.split("").map((char, index) => {
-      let className = "text-muted-foreground"; // 아직 타이핑 안 됨
-      
-      if (index < typedText.length) {
-        className = typedText[index] === char ? "text-primary font-semibold" : "text-destructive font-semibold";
-      }
-      
-      return (
-        <span key={index} className={className}>
-          {char}
-        </span>
-      );
-    });
-    
-    return textArray;
-  };
-
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="mb-8 text-center text-3xl font-bold">TypeHub</h1>
-      
-      <div className="mx-auto mb-8 max-w-2xl text-center">
-        <p className="text-lg text-muted-foreground">
-          기계식 키보드 애호가를 위한 최고의 타이핑 경험을 제공합니다.
-          아름다운 글귀를 타이핑하며 당신의 키보드를 즐겨보세요.
-        </p>
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex justify-start items-center mb-5">
+        <div className="flex items-center space-x-4">
+          <Button variant="secondary" size="sm" className="flex items-center gap-2">
+            <Settings size={16} />
+            <span>설정</span>
+          </Button>
+          <Button variant="secondary" size="sm" className="flex items-center gap-2">
+            <ChevronRight size={16} />
+            <span>글 목록 보기</span>
+          </Button>
+        </div>
       </div>
-      
-      <Card className="mx-auto mb-6 max-w-3xl">
-        <CardContent className="p-6">
-          <div className="mb-6 rounded-lg bg-muted p-6 font-mono text-lg leading-relaxed">
-            {renderText()}
-          </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <Card className="md:col-span-2 flex flex-col">
+          <CardContent className="flex-grow h-[350px] overflow-hidden">
+            <p className="text-2xl leading-relaxed text-foreground mb-6">
+              죽는 날까지 하늘을 우러러<br/>
+              한 점 부끄럼이 없기를,<br/>
+              잎새에 이는 바람에도<br/>
+              나는 괴로워했다.<br/>
+              별을 노래하는 마음으로<br/>
+              모든 죽어가는 것을 사랑해야지<br/>
+              그리고 나한테 주어진 길을<br/>
+              걸어가야겠다.<br/><br/>
+              오늘 밤에도 별이 바람에 스치운다.
+            </p>
+          </CardContent>
           
-          <input
-            ref={inputRef}
-            type="text"
-            value={typedText}
-            onChange={handleInput}
-            disabled={isCompleted}
-            className="w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
-            placeholder="텍스트를 입력하세요"
-            autoFocus
-          />
-          
-          {isCompleted && (
-            <div className="mt-4 text-center">
-              <p className="mb-2 text-green-600 dark:text-green-400">완료했습니다!</p>
-              <p className="text-lg font-semibold">
-                타이핑 속도: {calculateSpeed()} WPM
-              </p>
+          <CardFooter className="flex justify-end items-center border-t">
+            <div className="flex items-center space-x-4">
+              <Button  size="sm" className="flex items-center">
+                <RefreshCcw size={16} />
+                <span>재시작</span>
+              </Button>
+              <Button size="sm" className="flex items-center">
+                <SkipForward size={16} />
+                <span>다음 글</span>
+              </Button>
             </div>
-          )}
-        </CardContent>
-      </Card>
-      
-      <div className="flex justify-center gap-4">
-        <Button onClick={getRandomText} className="px-6">
-          {isCompleted ? "다시 시작" : "다른 텍스트"}
-        </Button>
+          </CardFooter>
+        </Card>
+
+        <Card className="h-max">
+          <CardHeader>
+            <CardTitle>타이핑 정보</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex justify-between items-center">
+              <span className="text-muted-foreground">제목</span>
+              <span className="font-medium">서시</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-muted-foreground">작성자</span>
+              <span>윤동주</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-muted-foreground">타수 (분)</span>
+              <span>0</span>
+            </div>
+            
+            <div className="mt-4">
+              <div className="h-2 bg-muted rounded-full overflow-hidden">
+                <div className="h-full bg-primary" style={{ width: '0%' }}></div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
-  );
+  )
 }

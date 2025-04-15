@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TypeHub - 기계식 키보드 애호가를 위한 타이핑 웹",
-  description: "키보드 애호가들을 위한 최고의 타이핑 경험을 제공합니다.",
+  title: "TypeHub - 온라인 타이핑 플랫폼",
+  description: "좋아하는 키보드로 타닥타닥 타이핑을 즐겨보세요.",
 };
 
 export default function RootLayout({
